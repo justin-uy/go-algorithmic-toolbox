@@ -5,87 +5,77 @@ import (
   "fmt"
 )
 
-type isPermutationPairTestCase struct {
-  s1, s2 string
-  expect bool
-}
-
-var isPermutationPairTestCaseProvider = []isPermutationPairTestCase{
-  isPermutationPairTestCase{
-    s1: "cat",
-    s2: "tac",
-    expect: true,
-  },
-  isPermutationPairTestCase{
-    s1: "cat",
-    s2: "bac",
-    expect: false,
-  },
-  isPermutationPairTestCase{
-    s1: "ccat",
-    s2: "catt",
-    expect: false,
-  },
-  isPermutationPairTestCase{
-    s1: "cat",
-    s2: "catt",
-    expect: false,
-  },
-  isPermutationPairTestCase{
-    s1: "tcat",
-    s2: "catt",
-    expect: true,
-  },
-}
-
 func TestIsPermutationPair(t *testing.T) {
-  for i, v := range isPermutationPairTestCaseProvider {
-    output := IsPermutationPair(v.s1, v.s2)
+  cases := []struct{s1, s2 string; expect bool} {
+    {
+      s1: "cat",
+      s2: "tac",
+      expect: true,
+    },
+    {
+      s1: "cat",
+      s2: "bac",
+      expect: false,
+    },
+    {
+      s1: "ccat",
+      s2: "catt",
+      expect: false,
+    },
+    {
+      s1: "cat",
+      s2: "catt",
+      expect: false,
+    },
+    {
+      s1: "tcat",
+      s2: "catt",
+      expect: true,
+    },
+  }
 
-    if output != v.expect {
-      t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, v.expect, output))
+  for i, c := range cases {
+    output := IsPermutationPair(c.s1, c.s2)
+
+    if output != c.expect {
+      t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, c.expect, output))
     }
   }
 }
 
-type hasPermutationPairTestCase struct {
-  input []string
-  expect bool
-}
-
-var hasPermutationPairTestCaseProvider = []hasPermutationPairTestCase {
-  hasPermutationPairTestCase{
-    input: []string{"cat", "bat", "cart", "tart", "tac"},
-    expect: true,
-  },
-  hasPermutationPairTestCase{
-    input: []string{"god", "dog", "flu", "blue", "du"},
-    expect: true,
-  },
-  hasPermutationPairTestCase{
-    input: []string{"dart", "starter", "tekken", "doop", "dork"},
-    expect: false,
-  },
-  hasPermutationPairTestCase{
-    input: []string{"before", "erofeb", "cart", "tarc", "tac"},
-    expect: true,
-  },
-  hasPermutationPairTestCase{
-    input: []string{"tart", "tac"},
-    expect: false,
-  },
-  hasPermutationPairTestCase{
-    input: []string{},
-    expect: false,
-  },
-}
-
 func TestHasPermutationPair(t *testing.T) {
-  for i, v := range hasPermutationPairTestCaseProvider {
-    output := HasPermutationPair(v.input)
+  cases := []struct{input []string; expect bool} {
+    {
+      input: []string{"cat", "bat", "cart", "tart", "tac"},
+      expect: true,
+    },
+    {
+      input: []string{"god", "dog", "flu", "blue", "du"},
+      expect: true,
+    },
+    {
+      input: []string{"dart", "starter", "tekken", "doop", "dork"},
+      expect: false,
+    },
+    {
+      input: []string{"before", "erofeb", "cart", "tarc", "tac"},
+      expect: true,
+    },
+    {
+      input: []string{"tart", "tac"},
+      expect: false,
+    },
+    {
+      input: []string{},
+      expect: false,
+    },
+  }
 
-    if output != v.expect {
-      t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, v.expect, output))
+  for i, c := range cases {
+    output := HasPermutationPair(c.input)
+
+    if output != c.expect {
+      t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, c.expect, output))
     }
   }
 }

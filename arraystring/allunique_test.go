@@ -5,43 +5,20 @@ import (
   "fmt"
 )
 
-type testCase struct {
-  input string
-  expect bool
-}
-
-var testCaseProvider = []testCase {
-  testCase {
-    input: "a",
-    expect: true,
-  },
-  testCase {
-    input: "ab",
-    expect: true,
-  },
-  testCase {
-    input: "aba",
-    expect: false,
-  },
-  testCase {
-    input: "cat",
-    expect: true,
-  },
-  testCase {
-    input: "dad",
-    expect: false,
-  },
-  testCase {
-    input: "animal",
-    expect: false,
-  },
-}
-
 func TestAllUnique(t *testing.T) {
-  for i, v := range testCaseProvider {
-    output := HasAllUniqueChars(v.input)
-    if output != v.expect {
-      t.Error(fmt.Sprintf("Test %v - Expected: %v; Got: %v", i, v.expect, output))
+  cases := []struct{input string; expect bool} {
+    {input: "a", expect: true},
+    {input: "ab", expect: true},
+    {input: "aba", expect: false},
+    {input: "cat", expect: true},
+    {input: "dad", expect: false},
+    {input: "animal", expect: false},
+  }
+
+  for i, c := range cases {
+    output := HasAllUniqueChars(c.input)
+    if output != c.expect {
+      t.Error(fmt.Sprintf("Test %v - Expected: %v; Got: %v", i, c.expect, output))
     }
   }
 }
