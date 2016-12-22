@@ -3,8 +3,11 @@ This is to track learning Go
 
 # Learning Go and reviewing CS basics
 
-As a guide, I'll be using the [Coursera Data Structures and Algorithms course](https://www.coursera.org/specializations/data-structures-algorithms)
+I'm using a bunch of varied sources, and am attempting to stick to golang
+conventions as well as possible.
 
-I'll update this readme as I go along
-
-
+This project uses the utility: (pre-commit)[http://pre-commit.com/] by Yelp to manage pre-commit hooks
+```
+# setup hooks by running
+pre-commit autoupdate
+```
