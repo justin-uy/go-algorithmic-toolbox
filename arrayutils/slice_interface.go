@@ -1,10 +1,4 @@
-package arraystring
-
-// Reverse returns a new string where the runes are in reverse order
-func Reverse(input string) string {
-	runeSlice := RuneSlice([]rune(input))
-	return string(ReverseSlice(runeSlice).(RuneSlice))
-}
+package arrayutils
 
 // SliceInterface is an interface for a variety of slice alias; this allow
 // us to do some generic operations on slices without as much repeated code
@@ -12,19 +6,6 @@ type SliceInterface interface {
 	Len() int
 	Swap(i, j int)
 	ToGenericSlice() []interface{}
-}
-
-// ReverseSlice will reverse the elements in the slice and return it
-func ReverseSlice(input SliceInterface) SliceInterface {
-	i := 0
-	j := input.Len() - 1
-
-	for i < j {
-		input.Swap(i, j)
-		i++
-		j--
-	}
-	return input
 }
 
 // SlicesEqual is used to evaluate equality between two slices. Equality

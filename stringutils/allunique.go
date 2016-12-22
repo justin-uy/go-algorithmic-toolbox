@@ -1,4 +1,4 @@
-package arraystring
+package stringutils
 
 // HasAllUnique returns true if all runes in the string are unique
 // lower case and upper case letters are considered different.

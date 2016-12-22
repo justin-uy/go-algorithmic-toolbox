@@ -1,4 +1,4 @@
-package week2
+package mathutils
 
 // GetNthFibonacci will attempt to return the Nth value in the Fibonacci sequence
 // There will be an integer overflow if given too large a value

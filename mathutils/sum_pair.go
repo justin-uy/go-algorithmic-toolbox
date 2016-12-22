@@ -1,4 +1,4 @@
-package misc
+package mathutils
 
 // HasPairMatchingSum returns true if there are two ints in the array that
 // equal the sum argument

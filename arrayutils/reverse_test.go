@@ -1,25 +1,9 @@
-package arraystring
+package arrayutils
 
 import (
 	"fmt"
 	"testing"
 )
-
-func TestReverse(t *testing.T) {
-	cases := []struct{ input, expect string }{
-		{input: "", expect: ""},
-		{input: "a", expect: "a"},
-		{input: "ab", expect: "ba"},
-		{input: "abc", expect: "cba"},
-	}
-
-	for i, testCase := range cases {
-		out := Reverse(testCase.input)
-		if out != testCase.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, testCase.expect, out))
-		}
-	}
-}
 
 func TestReverseSlice(t *testing.T) {
 	cases := []struct{ input, expect SliceInterface }{
@@ -58,7 +42,7 @@ func TestReverseSlice(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		out := ReverseSlice(c.input)
+		out := Reverse(c.input)
 		if !SlicesEqual(out.ToGenericSlice(), c.expect.ToGenericSlice()) {
 			t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, c.expect, out))
 		}

@@ -1,4 +1,4 @@
-package arraystring
+package stringutils
 
 import (
 	"bytes"
