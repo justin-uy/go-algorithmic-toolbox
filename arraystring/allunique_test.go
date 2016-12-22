@@ -19,7 +19,7 @@ func TestAllUnique(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		output := HasAllUniqueChars(c.input)
+		output := HasAllUnique(c.input)
 		if output != c.expect {
 			t.Error(fmt.Sprintf("Test %v - Expected: %v; Got: %v", i, c.expect, output))
 		}

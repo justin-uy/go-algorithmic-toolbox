@@ -21,6 +21,9 @@ func getFirstTwoValuesFromStringArray(arr []string) (int, int, error) {
 	return x, y, nil
 }
 
+// MaxPairProduct takes a string where there should be numbers separated by
+// spaces. If the input is valid, then we find the product of the two largest
+// numbers
 func MaxPairProduct(input string) (int, error) {
 	values := strings.Split(input, " ")
 

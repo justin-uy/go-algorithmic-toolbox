@@ -12,6 +12,8 @@ func isVowel(c rune) bool {
 	return false
 }
 
+// ReverseVowels takes a string that returns a new string where the vowels
+// appear in the reverse order
 func ReverseVowels(s string) string {
 	runes := []rune(s)
 	l := 0

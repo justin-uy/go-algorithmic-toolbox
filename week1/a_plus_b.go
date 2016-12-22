@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+// APlusB takes a string where there should be two ints separated by a space
+// If the input is valid, then it will return the sum of the two numbers
 func APlusB(input string) (int, error) {
 	values := strings.Split(input, " ")
 	sum := 0

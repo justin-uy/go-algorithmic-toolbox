@@ -5,6 +5,10 @@ import (
 	"strconv"
 )
 
+// SimpleCompression is very simple compression algorithm that will attempt
+// to truncate the word by truncating repeating letters followed by the total
+// number of times that letter appears in a row
+// If the original string is shorter, return the original string
 // Input: ""; Expect ""
 // Input: "a"; Expect "a"
 // Input: "aabb"; Expect "aabb"

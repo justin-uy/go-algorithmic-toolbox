@@ -1,5 +1,7 @@
 package misc
 
+// HasPairMatchingSum returns true if there are two ints in the array that
+// equal the sum argument
 func HasPairMatchingSum(numList []int, sum int) bool {
 	head := 0
 	tail := len(numList) - 1

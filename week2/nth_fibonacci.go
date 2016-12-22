@@ -4,6 +4,8 @@ import (
 	"errors"
 )
 
+// GetNthFibonacci will attempt to return the Nth value in the Fibonacci sequence
+// There will be an integer overflow if given too large a value
 func GetNthFibonacci(n int) (int, error) {
 	if n < 1 {
 		return 0, errors.New("Fibonacci sequence starts at 1")

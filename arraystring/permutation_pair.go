@@ -8,7 +8,9 @@ import (
 
 const asciiOffset = 97
 
-// assumes all characters are alphabetical
+// HasPermutationPair assumes all characters are alphabetical and returns true
+// if there exists one or more pairs of strings in the string array that are
+// permutations of each other
 func HasPermutationPair(input []string) bool {
 	sortedWordDictionary := make(map[string]bool)
 
@@ -46,6 +48,9 @@ func sortString(word string) string {
 	return getStringFromLetterCountArr(letterCountArr)
 }
 
+// IsPermutationPair returns true if the two string arguments are permutations
+// of each other. Permutation is defined as a word has the same characters
+// but may not be in the same order
 func IsPermutationPair(s1, s2 string) bool {
 	s1Len := len(s1)
 	s2Len := len(s2)
@@ -58,16 +63,17 @@ func IsPermutationPair(s1, s2 string) bool {
 
 	for _, v := range s1 {
 		// initially set each character key to true (not yet unseen) in s2
-		charMap[v] += 1
+		charMap[v]++
 	}
 
 	for _, v := range s2 {
 		// there are more characters of value 'v' in s2 than s1
 		if charMap[v] == 0 {
 			return false
-		} else {
-			charMap[v]--
 		}
+
+		charMap[v]--
+
 	}
 
 	for _, v := range charMap {

@@ -4,6 +4,8 @@ import (
 	"errors"
 )
 
+// GetNthFibonacciLastDigit returns that last digit in the Nth value in the
+// Fibonacci sequence
 func GetNthFibonacciLastDigit(n int) (int, error) {
 	if n < 1 {
 		return 0, errors.New("Fibonacci sequence starts at 1")
