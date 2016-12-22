@@ -2,7 +2,6 @@
     sha: v0.4.2
     hooks:
       -   id: check-merge-conflict
-      -   id: check-yaml
       -   id: end-of-file-fixer
       -   id: trailing-whitespace
 -   repo: git://github.com/dnephin/pre-commit-golang
@@ -11,4 +10,3 @@
       -   id: go-fmt
       -   id: go-vet
       -   id: go-lint
-      -   id: no-go-testing
