@@ -37,9 +37,9 @@ func New(val interface{}) (BigInt, error) {
 		}
 
 		return BigInt(valStr), nil
+	default:
+		return "", nil
 	}
-
-	return "", nil
 }
 
 func (b BigInt) IsNegative() bool {
