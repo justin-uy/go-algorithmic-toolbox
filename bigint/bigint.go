@@ -7,12 +7,18 @@ import (
 	"strings"
 )
 
+// BigInt is an alias for a string but has functions that allow it perform
+// arithmetic for numbers greater the int64 max
 type BigInt string
 
 func invalidBigInt() error {
 	return errors.New("Invalid value for BigInt")
 }
 
+// New is the idiomatic function for converting strings and ints to BigInt.
+// If we have a string where we are 100% sure that the string is correctly
+// formatted, (no non numberic characters and no leading 0s) we can simple
+// BigInt(stringVal)
 func New(val interface{}) (BigInt, error) {
 	switch val.(type) {
 	case int:
@@ -42,6 +48,8 @@ func New(val interface{}) (BigInt, error) {
 	}
 }
 
+// IsNegative returns true if the BigInt has a "-" at index 0; if it is a negative
+// integer
 func (b BigInt) IsNegative() bool {
 	digits := []rune(string(b))
 	if string(digits[0]) == "-" {
@@ -50,16 +58,22 @@ func (b BigInt) IsNegative() bool {
 	return false
 }
 
+// IsEqual is a method on BigInt where if the BigInt argument passed to it is
+// equal then it returns true
+func (b BigInt) IsEqual(b2 BigInt) bool {
+	return string(b) == string(b2)
+}
+
 // Add takes two BigInts as arguments and returns the sum of them as BigInt
 // Currently BigInts that are less than int64 max are treated the same as actual BigInts
 // Further optimizations will be done in the future to ensure that we use regular integer
 // arithmetic for values that will not overflow in64, which leverages the processor
 // much better
-func (b1 BigInt) Add(b2 BigInt) BigInt {
-	// start at the first digit (last index) of b1 and b2
-	// assume initially that b1 is longer and then update after
-	max := len(b1) - 1
-	maxVal := b1
+func (b BigInt) Add(b2 BigInt) BigInt {
+	// start at the first digit (last index) of b and b2
+	// assume initially that b is longer and then update after
+	max := len(b) - 1
+	maxVal := b
 	min := len(b2) - 1
 	minVal := b2
 
@@ -91,7 +105,7 @@ func (b1 BigInt) Add(b2 BigInt) BigInt {
 	}
 
 	// add one because the upper range is exclusive
-	max += 1
+	max++
 
 	if max > 0 {
 		maxValRest := string(maxVal[0:max])
