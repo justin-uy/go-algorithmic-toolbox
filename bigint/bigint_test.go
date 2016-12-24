@@ -73,3 +73,43 @@ func TestIsEqual(t *testing.T) {
 		}
 	}
 }
+
+func TestAbsoluteValue(t *testing.T) {
+	cases := []struct {
+		b, expect BigInt
+	}{
+		{b: BigInt("0"), expect: BigInt("0")},
+		{b: BigInt("-1"), expect: BigInt("1")},
+		{b: BigInt("12"), expect: BigInt("12")},
+		{b: BigInt("-12340"), expect: BigInt("12340")},
+	}
+
+	for i, c := range cases {
+		out := c.b.AbsoluteValue()
+		if out != c.expect {
+			t.Error(fmt.Sprintf("Test %v - Expected: %v; Got %v", i, c.expect, out))
+		}
+	}
+}
+
+func TestIsIntaable(t *testing.T) {
+	cases := []struct {
+		b      BigInt
+		expect bool
+	}{
+		{b: BigInt("0"), expect: true},
+		{b: BigInt("-20"), expect: true},
+		{b: BigInt("1000"), expect: true},
+		{b: BigInt("-9223372036854775807"), expect: true},
+		{b: BigInt("-9223372036854775808"), expect: false},
+		{b: BigInt("18446744073709551615"), expect: true},
+		{b: BigInt("18446744073709551616"), expect: false},
+	}
+
+	for i, c := range cases {
+		out := c.b.IsIntable()
+		if out != c.expect {
+			t.Error(fmt.Sprintf("Test %v - Expected: %v; Got %v", i, c.expect, out))
+		}
+	}
+}

@@ -7,6 +7,11 @@ import (
 	"strings"
 )
 
+var (
+	maxUint uint64 = 1<<64 - 1
+	maxInt         = 1<<63 - 1
+)
+
 // BigInt is an alias for a string but has functions that allow it perform
 // arithmetic for numbers greater the int64 max
 type BigInt string
@@ -61,7 +66,37 @@ func (b BigInt) IsNegative() bool {
 // IsEqual is a method on BigInt where if the BigInt argument passed to it is
 // equal then it returns true
 func (b BigInt) IsEqual(b2 BigInt) bool {
-	return string(b) == string(b2)
+	return b == b2
+}
+
+// AbsoluteValue returns absolute value of the BigInt
+func (b BigInt) AbsoluteValue() BigInt {
+	bRunes := []rune(string(b))
+
+	if bRunes[0] == '-' {
+		return BigInt(string(bRunes[1:]))
+	}
+
+	return b
+}
+
+// IsIntable returns true if the big int can be converted to an int
+func (b BigInt) IsIntable() bool {
+	// negative ints can only fit in int64 range
+	if b.IsNegative() {
+		if string(b.AbsoluteValue()) <= strconv.Itoa(maxInt) {
+			return true
+		}
+		return false
+	}
+
+	// positive numbers can fit in a uint64 which provides an extra
+	// bit
+	if string(b) <= strconv.FormatUint(maxUint, 10) {
+		return true
+	}
+
+	return false
 }
 
 // Add takes two BigInts as arguments and returns the sum of them as BigInt
