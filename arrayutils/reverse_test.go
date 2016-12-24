@@ -1,7 +1,6 @@
 package arrayutils
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -44,7 +43,7 @@ func TestReverseSlice(t *testing.T) {
 	for i, c := range cases {
 		out := Reverse(c.input)
 		if !SlicesEqual(out.ToGenericSlice(), c.expect.ToGenericSlice()) {
-			t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, c.expect, out))
+			t.Errorf("Test %v - Expected %v; Got %v", i, c.expect, out)
 		}
 	}
 }

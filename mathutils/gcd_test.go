@@ -1,7 +1,6 @@
 package mathutils
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -26,9 +25,9 @@ func TestGCD(t *testing.T) {
 
 		if c.expect != out || (err != nil && !c.hasErr) {
 			if err != nil {
-				t.Error(fmt.Sprintf("Test %v - Error %v", i, err))
+				t.Errorf("Test %v - Error %v", i, err)
 			} else {
-				t.Error(fmt.Sprintf("Test %v - Expect %v; Got %v", i, c.expect, out))
+				t.Errorf("Test %v - Expect %v; Got %v", i, c.expect, out)
 			}
 		}
 	}

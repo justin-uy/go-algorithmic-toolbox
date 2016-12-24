@@ -1,9 +1,6 @@
 package stringutils
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 func TestIsPermutationPair(t *testing.T) {
 	cases := []struct {
@@ -38,10 +35,10 @@ func TestIsPermutationPair(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		output := IsPermutationPair(c.s1, c.s2)
+		out := IsPermutationPair(c.s1, c.s2)
 
-		if output != c.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, c.expect, output))
+		if out != c.expect {
+			t.Errorf("Test %v - Expected %v; Got %v", i, c.expect, out)
 		}
 	}
 }
@@ -78,10 +75,10 @@ func TestHasPermutationPair(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		output := HasPermutationPair(c.input)
+		out := HasPermutationPair(c.input)
 
-		if output != c.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, c.expect, output))
+		if out != c.expect {
+			t.Errorf("Test %v - Expected %v; Got %v", i, c.expect, out)
 		}
 	}
 }

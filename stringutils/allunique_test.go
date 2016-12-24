@@ -1,7 +1,6 @@
 package stringutils
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -19,9 +18,9 @@ func TestAllUnique(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		output := HasAllUnique(c.input)
-		if output != c.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected: %v; Got: %v", i, c.expect, output))
+		out := HasAllUnique(c.input)
+		if out != c.expect {
+			t.Errorf("Test %v - Expected: %v; Got: %v", i, c.expect, out)
 		}
 	}
 }

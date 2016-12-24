@@ -1,9 +1,6 @@
 package stringutils
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 func TestReverse(t *testing.T) {
 	cases := []struct{ input, expect string }{
@@ -16,7 +13,7 @@ func TestReverse(t *testing.T) {
 	for i, testCase := range cases {
 		out := Reverse(testCase.input)
 		if out != testCase.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, testCase.expect, out))
+			t.Errorf("Test %v - Expected %v; Got %v", i, testCase.expect, out)
 		}
 	}
 }

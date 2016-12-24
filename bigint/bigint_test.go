@@ -1,7 +1,6 @@
 package bigint
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -30,7 +29,7 @@ func TestNew(t *testing.T) {
 	for i, c := range cases {
 		b, _ := New(c.input)
 		if string(b) != c.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, c.expect, b))
+			t.Errorf("Test %v - Expected %v; Got %v", i, c.expect, b)
 		}
 	}
 }
@@ -49,7 +48,7 @@ func TestIsNegative(t *testing.T) {
 	for i, c := range cases {
 		out := c.input.IsNegative()
 		if out != c.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected: %v; Got: %v", i, c.expect, out))
+			t.Errorf("Test %v - Expected: %v; Got: %v", i, c.expect, out)
 		}
 	}
 }
@@ -69,7 +68,7 @@ func TestIsEqual(t *testing.T) {
 	for i, c := range cases {
 		out := c.b1.IsEqual(c.b2)
 		if out != c.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected: %v; Got: %v", i, c.expect, out))
+			t.Errorf("Test %v - Expected: %v; Got: %v", i, c.expect, out)
 		}
 	}
 }
@@ -87,7 +86,7 @@ func TestAbsoluteValue(t *testing.T) {
 	for i, c := range cases {
 		out := c.b.AbsoluteValue()
 		if out != c.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected: %v; Got %v", i, c.expect, out))
+			t.Errorf("Test %v - Expected: %v; Got %v", i, c.expect, out)
 		}
 	}
 }
@@ -109,7 +108,7 @@ func TestIsIntaable(t *testing.T) {
 	for i, c := range cases {
 		out := c.b.IsIntable()
 		if out != c.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected: %v; Got %v", i, c.expect, out))
+			t.Errorf("Test %v - Expected: %v; Got %v", i, c.expect, out)
 		}
 	}
 }

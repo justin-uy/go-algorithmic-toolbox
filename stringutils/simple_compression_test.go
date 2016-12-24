@@ -1,9 +1,6 @@
 package stringutils
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 func TestSimpleCompression(t *testing.T) {
 	cases := []struct{ in, expect string }{
@@ -18,7 +15,7 @@ func TestSimpleCompression(t *testing.T) {
 	for i, c := range cases {
 		out := SimpleCompression(c.in)
 		if out != c.expect {
-			t.Error(fmt.Sprintf("Test %v - Expect %v; Got %v", i, c.expect, out))
+			t.Errorf("Test %v - Expect %v; Got %v", i, c.expect, out)
 		}
 	}
 }

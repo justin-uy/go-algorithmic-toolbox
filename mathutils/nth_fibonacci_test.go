@@ -1,7 +1,6 @@
 package mathutils
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -20,7 +19,7 @@ func TestNthFibonacci(t *testing.T) {
 	for i, c := range cases {
 		out := GetNthFibonacci(c.input)
 		if out != c.expect {
-			t.Error(fmt.Sprintf("Test %v - Expected %v; Got %v", i, c.expect, out))
+			t.Errorf("Test %v - Expected %v; Got %v", i, c.expect, out)
 		}
 	}
 }
