@@ -69,8 +69,8 @@ func (b BigInt) IsEqual(b2 BigInt) bool {
 	return b == b2
 }
 
-// AbsoluteValue returns absolute value of the BigInt
-func (b BigInt) AbsoluteValue() BigInt {
+// Abs returns absolute value of the BigInt
+func (b BigInt) Abs() BigInt {
 	bRunes := []rune(string(b))
 
 	if bRunes[0] == '-' {
@@ -84,7 +84,7 @@ func (b BigInt) AbsoluteValue() BigInt {
 func (b BigInt) IsIntable() bool {
 	// negative ints can only fit in int64 range
 	if b.IsNegative() {
-		if string(b.AbsoluteValue()) <= strconv.Itoa(maxInt) {
+		if string(b.Abs()) <= strconv.Itoa(maxInt) {
 			return true
 		}
 		return false
@@ -99,63 +99,119 @@ func (b BigInt) IsIntable() bool {
 	return false
 }
 
+// canUsIntAddition true if it is possible to use integer addition on the
+// two BigInts
+func canUseIntAddition(b1, b2 BigInt) bool {
+	// both numbers have the same sign
+	if (b1.IsNegative() && b2.IsNegative()) || (!b1.IsNegative() && !b2.IsNegative()) {
+		absB1, absB2 := b1.Abs(), b2.Abs()
+		if absB1.IsIntable() && absB2.IsIntable() {
+			absB1Uint, _ := absB1.Uint()
+			absB2Uint, _ := absB2.Uint()
+
+			return maxUint-absB1Uint <= absB2Uint
+		}
+	}
+
+	return false
+}
+
+// Int tries to return the int64 value of the BigInt
+func (b BigInt) Int() (int, error) {
+	return strconv.Atoi(string(b))
+}
+
+// Uint tries to return the uint64 value of the BigInt
+func (b BigInt) Uint() (uint64, error) {
+	return strconv.ParseUint(string(b), 10, 64)
+}
+
+// Negate returns a BigInt with a sign change + to - or vice versa
+func (b BigInt) Negate() BigInt {
+	if b.IsNegative() {
+		return b.Abs()
+	}
+
+	return BigInt("-" + string(b))
+}
+
+// Sub will handle the subtract a bigint; not yet implemented
+func (b BigInt) Sub(b2 BigInt) BigInt {
+	// not yet implemented
+	return BigInt("0")
+}
+
 // Add takes two BigInts as arguments and returns the sum of them as BigInt
 // Currently BigInts that are less than int64 max are treated the same as actual BigInts
 // Further optimizations will be done in the future to ensure that we use regular integer
 // arithmetic for values that will not overflow in64, which leverages the processor
 // much better
 func (b BigInt) Add(b2 BigInt) BigInt {
-	// start at the first digit (last index) of b and b2
-	// assume initially that b is longer and then update after
-	max := len(b) - 1
-	maxVal := b
-	min := len(b2) - 1
-	minVal := b2
+	switch {
+	case b.IsNegative() && b2.IsNegative():
+		return b.Abs().Add(b2.Abs()).Negate()
+	case canUseIntAddition(b, b2):
+		bUint, _ := b.Uint()
+		b2Uint, _ := b2.Uint()
+		sum, _ := New(bUint + b2Uint)
+		return sum
+	case b.IsNegative() && !b2.IsNegative():
+		return b2.Sub(b)
+	case !b.IsNegative() && b2.IsNegative():
+		return b.Sub(b2)
+	default:
+		// start at the first digit (last index) of b and b2
+		// assume initially that b is longer and then update after
+		max := len(b) - 1
+		maxVal := b
+		min := len(b2) - 1
+		minVal := b2
 
-	if min > max {
-		temp := max
-		tempVal := maxVal
-		max = min
-		maxVal = minVal
-		min = temp
-		minVal = tempVal
-	}
-
-	result := ""
-	carry := 0
-	for min > 0 {
-		digit1, _ := strconv.Atoi(string(minVal[min:]))
-		digit2, _ := strconv.Atoi(string(maxVal[max:]))
-
-		sum := digit1 + digit2 + carry
-		carry = 0
-
-		if sum > 9 {
-			carry = 1
+		if min > max {
+			temp := max
+			tempVal := maxVal
+			max = min
+			maxVal = minVal
+			min = temp
+			minVal = tempVal
 		}
-		result += strconv.Itoa(sum)
 
-		min--
-		max--
-	}
+		result := ""
+		carry := 0
+		for min > 0 {
+			digit1, _ := strconv.Atoi(string(minVal[min:]))
+			digit2, _ := strconv.Atoi(string(maxVal[max:]))
 
-	// add one because the upper range is exclusive
-	max++
+			sum := digit1 + digit2 + carry
+			carry = 0
 
-	if max > 0 {
-		maxValRest := string(maxVal[0:max])
-		if carry == 0 {
-			result = maxValRest + result
-		} else {
-			maxRestBigInt, _ := New(maxValRest)
-			carryBigInt, _ := New(carry)
-			restSum := maxRestBigInt.Add(carryBigInt)
-			// concat strings (not addition)
-			result = string(restSum) + result
+			if sum > 9 {
+				carry = 1
+			}
+			result += strconv.Itoa(sum)
+
+			min--
+			max--
 		}
+
+		// add one because the upper range is exclusive
+		max++
+
+		if max > 0 {
+			maxValRest := string(maxVal[0:max])
+			if carry == 0 {
+				result = maxValRest + result
+			} else {
+				maxRestBigInt, _ := New(maxValRest)
+				carryBigInt, _ := New(carry)
+				restSum := maxRestBigInt.Add(carryBigInt)
+				// concat strings (not addition)
+				result = string(restSum) + result
+			}
+		}
+
+		resultBigInt, _ := New(result)
+
+		return resultBigInt
 	}
-
-	resultBigInt, _ := New(result)
-
-	return resultBigInt
 }

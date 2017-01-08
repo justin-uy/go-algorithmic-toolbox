@@ -73,7 +73,7 @@ func TestIsEqual(t *testing.T) {
 	}
 }
 
-func TestAbsoluteValue(t *testing.T) {
+func TestAbs(t *testing.T) {
 	cases := []struct {
 		b, expect BigInt
 	}{
@@ -84,7 +84,7 @@ func TestAbsoluteValue(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		out := c.b.AbsoluteValue()
+		out := c.b.Abs()
 		if out != c.expect {
 			t.Errorf("Test %v - Expected: %v; Got %v", i, c.expect, out)
 		}
